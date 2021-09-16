@@ -1,0 +1,154 @@
+
+<!--
+first step :
+ npm install ngx-captcha
+ 2nd step:
+ import this (NgxCaptchaModule) in app.module.ts
+ 3rd step:
+ use the code in html of your form where you need
+ <ngx-recaptcha2 #captchaElem
+ [siteKey]="siteKey"
+ formControlName="recaptcha">
+</ngx-recaptcha2>
+ 4th step:
+ also add this code in reactive form validation
+ recaptcha: ['', Validators.required]
+5th step:
+go to this site create a key for your self
+https://www.google.com/recaptcha/admin/create
+6th step :
+use this siteKey = '6LeL1cwbAAAAAL49LaLTj7YtV-Rwb3YcJxx7Qi6x' -->
+
+<div class="container-fluid main-div">
+  <div class="container main-div1">
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 register p-5">
+      <div class="main-div1">
+        <h1 class="font">Create Account</h1>
+      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>User Name</label>
+            <input type="text" formControlName="userName" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+            <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+              <div *ngIf="f.userName.errors.required">User Name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>First Name</label>
+            <input type="text" formControlName="firstName" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+              <div *ngIf="f.firstName.errors.required">First Name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Last Name</label>
+            <input type="text" formControlName="lastName" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+              <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Contact Number</label>
+            <input type="text" formControlName="contactNumber" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.contactNumber.errors }" />
+            <div *ngIf="submitted && f.contactNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.contactNumber.errors.required">Contact Number is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Date Of Birth</label>
+            <input type="date" formControlName="dateOfBirth" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.dateOfBirth.errors }" />
+            <div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
+              <div *ngIf="f.dateOfBirth.errors.required">Date of Birth is required</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Email</label>
+            <input type="email" formControlName="email" name="email" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Password</label>
+            <input type="password" formControlName="password" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row row mt-3">
+          <div class="form-group col">
+            <label>Confirm Password</label>
+            <input type="password" formControlName="confirmPassword" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+              <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group form-check mt-3">
+          <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input"
+            [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
+          <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+          <div *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
+        </div>
+        <div class="form-group form-check mt-3">
+
+          <!-- this is captcha keyword use in html  -->
+          <ngx-recaptcha2 #captchaElem
+          [siteKey]="siteKey"
+          formControlName="recaptcha">
+        </ngx-recaptcha2>
+
+          <div *ngIf="submitted && f.recaptcha.errors" class="invalid-feedback">recaptcha required</div>
+        </div>
+        <div class="main-div1 mt-3">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <button class="register-btn" type="submit">Register</button>
+          </div>
+
+        </div>
+
+
+      </form>
+    </div>
+
+  </div>
+  </div>
+
